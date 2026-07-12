@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SEO & META
+  ═══════════════════════════════════════════════════════════ -->
+  <title>Happy Birthday, Sahasra 💜</title>
+  <meta name="description"
+    content="A personal birthday experience crafted with love — an interactive museum of our friendship.">
+  <meta name="theme-color" content="#FAF9F6">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FONTS — Inter (Apple SF Pro fallback)
+       REPLACE: swap for a different Google Font if desired
+  ═══════════════════════════════════════════════════════════ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GSAP — Premium animations
+  ═══════════════════════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" defer></script>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FIREBASE — Shared memory persistence
+       (compat libraries use familiar firebase.xxx() syntax)
+  ═══════════════════════════════════════════════════════════ -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LANDING — Fixed overlay entrance experience
+       The 8 photo cards peek in from the viewport edges.
+       The center stays empty, revealing the birthday title.
+  ═══════════════════════════════════════════════════════════ -->
+  <div id="landing">
+
+    <!-- ──────────────────────────────────────────────────────
+         PHOTO CARDS (8 scattered around edges)
+         data-speed: parallax speed multiplier (0.3–0.9)
+         data-rotate: base rotation in degrees (-8 to +8)
+         REPLACE: swap src with your own photos
+    ────────────────────────────────────────────────────── -->
+    <div class="photo-card" id="p1" data-speed="0.5" data-rotate="-6">
+      <img src="./assets/images/photo-1.jpg" alt="A memory" loading="eager" fetchpriority="high">
+    </div>
+    <div class="photo-card" id="p2" data-speed="0.75" data-rotate="4">
+      <img src="./assets/images/photo-2.jpg" alt="A memory" loading="eager" fetchpriority="high">
+    </div>
+    <div class="photo-card" id="p3" data-speed="0.6" data-rotate="7">
+      <img src="assets/images/photo-3.jpg" alt="A memory" loading="eager" fetchpriority="high">
+    </div>
+    <div class="photo-card" id="p4" data-speed="0.4" data-rotate="-4">
+      <img src="assets/images/photo-4.jpg" alt="A memory" loading="eager" fetchpriority="high">
+    </div>
+    <div class="photo-card" id="p5" data-speed="0.85" data-rotate="5">
+      <img src="assets/images/photo-5.jpg" alt="A memory" loading="eager">
+    </div>
+    <div class="photo-card" id="p6" data-speed="0.65" data-rotate="-7">
+      <img src="assets/images/photo-6.jpg" alt="A memory" loading="eager">
+    </div>
+    <div class="photo-card" id="p7" data-speed="0.35" data-rotate="3">
+      <img src="assets/images/photo-7.jpg" alt="A memory" loading="eager">
+    </div>
+    <div class="photo-card" id="p8" data-speed="0.55" data-rotate="-5">
+      <img src="assets/images/photo-8.jpg" alt="A memory" loading="eager">
+    </div>
+
+    <!-- ──────────────────────────────────────────────────────
+         CENTER HERO TEXT
+         REPLACE: change name, subtitle, etc.
+    ────────────────────────────────────────────────────── -->
+    <div class="hero-content" id="hero-content">
+      <span class="hero-eyebrow" id="hero-eyebrow">✦</span>
+      <h1 class="hero-title" id="hero-title">
+        Happy Birthday,<br><span class="hero-name">Sahasra</span>
+      </h1>
+      <p class="hero-subtitle" id="hero-subtitle">Move your cursor.</p>
+      <p class="hero-cta" id="hero-cta">Click anywhere to begin.</p>
+    </div>
+
+  </div><!-- /landing -->
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT — Lives behind the landing overlay.
+       Revealed when the visitor clicks.
+  ═══════════════════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ─────────────────────────────────────────────────────
+         CHAPTER 01 — How It All Started
+         Layout: Left text panel + Right photo
+         REPLACE: edit text and swap chapter-1.jpg
+    ───────────────────────────────────────────────────── -->
+    <section id="chapter-01" class="chapter chapter-split" data-chapter="01">
+      <div class="chapter-text-side">
+        <div class="chapter-meta">
+          <span class="chapter-num">Chapter 01</span>
+          <div class="chapter-line"></div>
+        </div>
+        <h2 class="chapter-title">How It All<br>Started</h2>
+        <!-- REPLACE: your memory of how you met -->
+        <p class="chapter-body">
+          Everything was intentional.
+          I dont belive in "We didnt even plan to be togather but we just ended up togather" 
+          What i do belive in is "We planned to be togather and we did it and we will continue that till the end".
+        </p>
+        <p class="chapter-tag">✦ The beginning</p>
+      </div>
+      <div class="chapter-photo-side">
+        <!-- REPLACE: your chapter 01 photo -->
+        <div class="chapter-photo-frame">
+          <img src="assets/images/chapter-1.jpg" alt="How it all started" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────
+         CHAPTER 02 — One of Our Favorite Days
+         Layout: Full-bleed photo with text overlay
+         REPLACE: edit caption and swap chapter-2.jpg
+    ───────────────────────────────────────────────────── -->
+    <section id="chapter-02" class="chapter chapter-fullbleed" data-chapter="02">
+      <div class="fullbleed-photo-container">
+        <!-- REPLACE: your chapter 02 photo -->
+        <img src="assets/images/chapter-2.jpg" alt="One of our favorite days" loading="lazy" class="fullbleed-photo">
+        <div class="fullbleed-overlay"></div>
+      </div>
+      <div class="fullbleed-text">
+        <div class="chapter-meta light">
+          <span class="chapter-num">Chapter 02</span>
+          <div class="chapter-line"></div>
+        </div>
+        <h2 class="chapter-title light">One of Our<br>Favorite Days</h2>
+        <!-- REPLACE: your caption for this day -->
+        <p class="chapter-caption">That perfect day when everything just fell into place. The sun was right. The mood
+          was right. We were right.</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────
+         CHAPTER 03 — The Funniest Memory
+         Layout: Large photo left + story card right (editorial)
+         REPLACE: edit your funny story and swap chapter-3.jpg
+    ───────────────────────────────────────────────────── -->
+    <section id="chapter-03" class="chapter chapter-editorial" data-chapter="03">
+      <div class="editorial-photo">
+        <!-- REPLACE: your chapter 03 photo -->
+        <div class="chapter-photo-frame editorial-frame">
+          <img src="assets/images/chapter-3.jpg" alt="The funniest memory" loading="lazy">
+        </div>
+      </div>
+      <div class="editorial-text">
+        <div class="chapter-meta">
+          <span class="chapter-num">Chapter 03</span>
+          <div class="chapter-line"></div>
+        </div>
+        <h2 class="chapter-title">The Funniest<br>Memory</h2>
+        <!-- REPLACE: your funny story here -->
+        <p class="chapter-body">
+         Well honestly, I don't particularly remember the funniest thing that happened, but I do remmeber The feeling of you and me laughing a lot when we were togather and then the dialog S-"I am gonna cry today" N-"Why?" S-"Cuz we laughed so much"
+        <!-- REPLACE: a funny quote from that memory -->
+        <blockquote class="chapter-quote">
+          "I will surely miss laughing with you... BUTT only for 2 months then we will meet - muehehehe"
+        </blockquote>
+        <p class="chapter-tag">✦ Some things are just for us</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────
+         CHAPTER 04 — Things I'll Always Remember
+         Layout: Cards appearing one-by-one on scroll
+         REPLACE: edit each memory card title and text
+    ───────────────────────────────────────────────────── -->
+    <section id="chapter-04" class="chapter chapter-cards" data-chapter="04">
+      <div class="chapter-header centered">
+        <div class="chapter-meta centered">
+          <span class="chapter-num">Chapter 04</span>
+          <div class="chapter-line"></div>
+        </div>
+        <h2 class="chapter-title">Things I'll<br>Always Remember</h2>
+      </div>
+
+      <div class="memory-cards-grid" id="cards-grid">
+        <!-- REPLACE: customize these 6 memory cards -->
+        <div class="memory-card" data-delay="0">
+          <span class="memory-icon">🙏</span>
+          <h3 class="memory-card-title">Krishna</h3>
+          <p class="memory-card-text">It is beautiful to see how deeply your heart resonates with the eternal love of Radha Rani and Sri Krishna.</p>
+        </div>
+        <div class="memory-card" data-delay="1">
+          <span class="memory-icon">📝</span>
+          <h3 class="memory-card-title">Hand writing</h3>
+          <p class="memory-card-text">"In a world of digital fonts, your handwriting is an unforgettable masterpiece that deserves to be framed."</p>
+        </div>
+        <div class="memory-card" data-delay="2">
+          <span class="memory-icon">🍜</span>
+          <h3 class="memory-card-title">Noddles</h3>
+          <p class="memory-card-text">At this moment I cant help but remember the cup noddles and the yap sessions  had with you.</p>
+        </div>
+        <div class="memory-card" data-delay="3">
+          <span class="memory-icon">😂</span>
+          <h3 class="memory-card-title">Your Laugh</h3>
+          <p class="memory-card-text">The way you laugh but no sound ever heard (true laugh check).
+            .</p>
+        </div>
+        <div class="memory-card" data-delay="4">
+          <span class="memory-icon">🌸</span>
+          <h3 class="memory-card-title">Ordinary Days</h3>
+          <p class="memory-card-text">How you make ordinary moments feel worth remembering.</p>
+        </div>
+        <div class="memory-card" data-delay="5">
+          <span class="memory-icon">✨</span>
+          <h3 class="memory-card-title">Jeolous</h3>
+          <p class="memory-card-text">That day when I complimented Hansika's dance but not yours haha (i thought you already knew you were awsome but that was cute to see you jealous).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────
+         CHAPTER 05 — A Letter
+         Layout: Centered editorial with paragraph-by-paragraph reveal
+         REPLACE: personalize every paragraph of this letter
+         REPLACE: change "Nityasha" signature to your name
+    ───────────────────────────────────────────────────── -->
+    <section id="chapter-05" class="chapter chapter-letter" data-chapter="05">
+      <div class="letter-container">
+        <div class="chapter-meta centered">
+          <span class="chapter-num">Chapter 05</span>
+          <div class="chapter-line"></div>
+        </div>
+        <h2 class="chapter-title letter-heading">A Letter</h2>
+
+        <div class="letter-body" id="letter-body">
+          <!-- REPLACE: personalize each paragraph below -->
+          <p class="letter-p" data-index="0">To my dearest,
+          <p class="letter-p" data-index="1">The day that we first met, chatting on WhatsApp that day, I knew there was
+            something incredible about you. As you know some people just give off that kinda vibe where you know they
+            are the right person for you. That's you for me.</p>
+          <p class="letter-p" data-index="2">I am lucky to have you in my life. You are one of the most remarkable
+            people I've ever had the privilege of knowing. Belive it or not your intelligence shows in many ways than
+            other. You are the typa friend who i know i can trust. I love the child-like and pure side of you, never let
+            that dull.</p>
+          <p class="letter-p" data-index="3">I hope this birthday feels as extraordinary as you are. And I hope the year
+            ahead brings you everything you've been quietly hoping for. Love you from the bottom of my heart.</p>
+          <p class="letter-p letter-sign" data-index="4">Happy birthday, Sahasra.</p>
+          <!-- REPLACE: change "Nityasha" to your name -->
+          <p class="letter-p letter-signature" data-index="5">
+            Yours Truely,<br>
+            <span class="signature-name" id="signature-name">Nityasha</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────
+         GALLERY — Editorial masonry layout
+         REPLACE: swap any of these photos with your own
+         REPLACE: edit data-caption for each photo
+    ───────────────────────────────────────────────────── -->
+    <section id="gallery" class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title">Our Gallery</h2>
+        <p class="section-subtitle">A collection of moments worth keeping.</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- REPLACE: add/remove gallery items here -->
+        <div class="gallery-item" data-caption="The one where everything was perfect" tabindex="0" role="button"
+          aria-label="Open photo: The one where everything was perfect">
+          <img src="assets/images/photo-1.jpg" alt="Gallery memory 1" loading="lazy">
+          <div class="gallery-hover-overlay"><span>View</span></div>
+        </div>
+        <div class="gallery-item" data-caption="Golden hour and good company" tabindex="0" role="button"
+          aria-label="Open photo: Golden hour and good company">
+          <img src="assets/images/photo-2.jpg" alt="Gallery memory 2" loading="lazy">
+          <div class="gallery-hover-overlay"><span>View</span></div>
+        </div>
+        <div class="gallery-item" data-caption="Road trips and playlists" tabindex="0" role="button"
+          aria-label="Open photo: Road trips and playlists">
+          <img src="assets/images/photo-3.jpg" alt="Gallery memory 3" loading="lazy">
+          <div class="gallery-hover-overlay"><span>View</span></div>
+        </div>
+        <div class="gallery-item" data-caption="Secrets in the garden" tabindex="0" role="button"
+          aria-label="Open photo: Secrets in the garden">
+          <img src="assets/images/photo-4.jpg" alt="Gallery memory 4" loading="lazy">
+          <div class="gallery-hover-overlay"><span>View</span></div>
+        </div>
+        <div class="gallery-item" data-caption="Birthday moments we won't forget" tabindex="0" role="button"
+          aria-label="Open photo: Birthday moments we won't forget">
+          <img src="assets/images/photo-5.jpg" alt="Gallery memory 5" loading="lazy">
+          <div class="gallery-hover-overlay"><span>View</span></div>
+        </div>
+        <div class="gallery-item" data-caption="The city, just us" tabindex="0" role="button"
+          aria-label="Open photo: The city, just us">
+          <img src="assets/images/photo-6.jpg" alt="Gallery memory 6" loading="lazy">
+          <div class="gallery-hover-overlay"><span>View</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────
+         MEMORY SECTION — Firebase-powered shared memories
+         Upload a photo, title, date, and note.
+         Both of you can see each other's uploads.
+    ───────────────────────────────────────────────────── -->
+    <section id="memory" class="memory-section">
+      <div class="memory-section-header">
+        <h2 class="section-title">Our Story Doesn't End Here.</h2>
+        <p class="section-subtitle">Btw did u knowwww how difficult it was typing things here using "you" instead of "u"</p>
+      </div>
+
+      <!-- Memories loaded from Firebase appear here -->
+      <div id="memories-feed" class="memories-feed"></div>
+
+      <!-- Add Memory Card -->
+      <div class="add-memory-card" id="add-memory-card">
+        <div class="add-memory-card-inner">
+          <h3 class="add-memory-title">+ Add a Memory</h3>
+          <p class="add-memory-subtitle">Upload a photo and write something about it.</p>
+
+          <form id="memory-form" class="memory-form" novalidate>
+            <!-- Photo upload with preview -->
+            <div class="form-group">
+              <label class="upload-label" for="memory-photo" aria-label="Upload a photo">
+                <div class="upload-placeholder" id="upload-placeholder">
+                  <span class="upload-icon">📷</span>
+                  <span class="upload-text">Tap to add a photo</span>
+                </div>
+                <img id="upload-preview" class="upload-preview visually-hidden" alt="Upload preview">
+              </label>
+              <input type="file" id="memory-photo" name="memory-photo" accept="image/*" class="file-input"
+                aria-label="Select photo file">
+            </div>
+
+            <!-- Title -->
+            <div class="form-group">
+              <input type="text" id="memory-title" name="memory-title" placeholder="Give this memory a title"
+                class="form-input" maxlength="80" required aria-required="true">
+            </div>
+
+            <!-- Date -->
+            <div class="form-group">
+              <input type="date" id="memory-date" name="memory-date" class="form-input" required aria-required="true"
+                aria-label="Date of this memory">
+            </div>
+
+            <!-- Note -->
+            <div class="form-group">
+              <textarea id="memory-note" name="memory-note" placeholder="What made this moment special?"
+                class="form-textarea" rows="4" maxlength="400" aria-label="Write about this memory"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+              <span class="btn-text">Save this memory</span>
+              <span class="btn-arrow">→</span>
+            </button>
+
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <!-- REPLACE: change name/year -->
+      <p class="footer-text">Made with love by Nityasha Rajput &nbsp;·&nbsp; 2026 &nbsp;<span class="footer-heart">💜</span>
+      </p>
+    </footer>
+
+  </main><!-- /main-content -->
+
+  <!-- ═══════════════════════════════════════════════════════════
+       LIGHTBOX — Photo fullscreen viewer
+  ═══════════════════════════════════════════════════════════ -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content" id="lightbox-content">
+      <img id="lightbox-img" src="" alt="Expanded photo">
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo viewer">✕</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MUSIC BUTTON — Floating action button
+       REPLACE: drop your MP3 into assets/audio/birthday.mp3
+       Recommended: a soft instrumental, lo-fi, or acoustic track
+  ═══════════════════════════════════════════════════════════ -->
+  <button id="music-btn" class="music-btn" aria-label="Toggle background music" title="Toggle music">
+    <!-- Play icon (music note) -->
+    <svg id="icon-play" class="music-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18V5l12-2v13" />
+      <circle cx="6" cy="18" r="3" />
+      <circle cx="18" cy="16" r="3" />
+    </svg>
+    <!-- Pause icon (bars) — hidden initially -->
+    <svg id="icon-pause" class="music-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="6" y="4" width="4" height="16" rx="1" />
+      <rect x="14" y="4" width="4" height="16" rx="1" />
+    </svg>
+  </button>
+
+  <!-- REPLACE: swap src with your actual audio file path -->
+  <!-- Tip: use a lo-fi, soft acoustic or instrumental track -->
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/audio/birthday.mp3" type="audio/mpeg">
+    <!-- Fallback: <source src="assets/audio/birthday.ogg" type="audio/ogg"> -->
+  </audio>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCRIPTS — Firebase first, then main script
+  ═══════════════════════════════════════════════════════════ -->
+  <script src="firebase.js"></script>
+  <script src="script.js" defer></script>
+
+</body>
+
+</html>
